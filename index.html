@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Vanguard | Moda Masculina Premium</title>
+
+    <meta
+      name="description"
+      content="Moda masculina essencial. Qualidade, estilo e conforto em cada peça. Roupas que definem sua presença."
+    />
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/style/style.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gold: "#D4AF37",
+              onyx: "#0F0F0F",
+              ivory: "#F9F9F7",
+              premiumGray: "#4A4A4A",
+            },
+            fontFamily: {
+              luxury: ["Cormorant Garamond", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            animation: {
+              "fade-in-up":
+                "fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+              "slide-in-right":
+                "slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideInRight: {
+                "0%": { transform: "translateX(100%)" },
+                "100%": { transform: "translateX(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-ivory text-onyx">
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed top-0 w-full z-50 glass-header border-b border-white/20 py-4 transition-all duration-500 px-6 md:px-12"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a
+          href="#"
+          class="text-xl md:text-2xl font-luxury font-bold tracking-[0.2em] uppercase"
+        >
+          Vanguard <span class="text-gold">Style</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div
+          class="hidden md:flex gap-10 text-[11px] font-medium tracking-[0.3em] uppercase text-gray-500"
+        >
+          <a href="#colecoes" class="hover:text-gold transition-colors"
+            >Coleções</a
+          >
+          <a href="#produtos" class="hover:text-gold transition-colors">Shop</a>
+          <a href="#sobre" class="hover:text-gold transition-colors">Ateliê</a>
+          <a href="#localizacao" class="hover:text-gold transition-colors"
+            >Localização</a
+          >
+        </div>
+
+        <div class="flex items-center gap-6">
+          <button
+            id="btn-cart"
+            class="relative text-gray-800 hover:text-gold transition-colors"
+          >
+            <i class="fa-solid fa-bag-shopping text-lg"></i>
+            <span
+              id="cart-count"
+              class="absolute -top-2 -right-2 bg-black text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold opacity-0 transition-opacity"
+              >0</span
+            >
+          </button>
+          <button id="btn-mobile-menu" class="md:hidden text-gray-800 p-2">
+            <i class="fa-solid fa-bars-staggered text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 z-[100] invisible transition-all duration-500"
+    >
+      <div
+        id="mobile-menu-overlay"
+        class="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 transition-opacity duration-500"
+      ></div>
+      <aside
+        class="absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-white translate-x-full transition-transform duration-500 flex flex-col p-12"
+      >
+        <button
+          id="close-mobile-menu"
+          class="absolute top-8 right-8 text-gray-400"
+        >
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+        <div
+          class="mt-20 flex flex-col gap-8 text-xs font-bold uppercase tracking-[0.4em]"
+        >
+          <a href="#colecoes" class="mobile-nav-link">Coleções</a>
+          <a href="#produtos" class="mobile-nav-link">Shop</a>
+          <a href="#sobre" class="mobile-nav-link">Ateliê</a>
+          <a href="#localizacao" class="mobile-nav-link">Localização</a>
+          <a href="#contato" class="mobile-nav-link">Contato</a>
+        </div>
+        <div class="mt-auto border-t pt-8">
+          <p class="text-[9px] text-gray-400 tracking-widest uppercase mb-4">
+            Masculino Essentials
+          </p>
+          <div class="flex gap-4 text-gray-400">
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Hero -->
+    <header
+      class="relative h-[90vh] md:h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]"
+    >
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop"
+          class="w-full h-full object-cover opacity-60 scale-105"
+          alt="Vanguard Style - Homem estiloso em ambiente urbano"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"
+        ></div>
+      </div>
+      <div class="relative z-10 text-center px-6 max-w-5xl animate-fade-in-up">
+        <span
+          class="text-gold uppercase tracking-[0.6em] text-[9px] md:text-[10px] font-bold mb-6 block"
+          >Masculino Premium</span
+        >
+        <h1
+          class="text-white text-4xl md:text-fluid-lg font-luxury leading-tight mb-10 italic"
+        >
+          Estilo que define <br />sua presença.
+        </h1>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
+          <a
+            href="#produtos"
+            class="btn-gold text-black px-12 py-4 text-[10px] font-bold uppercase tracking-[0.3em]"
+            >Explorar Coleção</a
+          >
+          <a
+            href="#"
+            class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-12 py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all"
+            >Consultoria de Estilo</a
+          >
+        </div>
+      </div>
+      <div class="scroll-indicator text-white/50 flex flex-col items-center">
+        <span class="text-[8px] uppercase tracking-[0.4em] mb-2">Scroll</span>
+        <i class="fa-solid fa-chevron-down text-sm"></i>
+      </div>
+    </header>
+
+    <!-- Categories -->
+    <section id="colecoes" class="py-20 md:py-32 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
+        >
+          <div>
+            <span
+              class="text-gold uppercase tracking-[0.3em] text-[10px] font-bold"
+              >Categorias Essenciais</span
+            >
+            <h2 class="text-3xl md:text-5xl font-luxury mt-2 italic">
+              Para Todas as Ocasiões
+            </h2>
+          </div>
+          <p class="text-gray-500 text-sm max-w-md font-light leading-relaxed">
+            Peças cuidadosamente selecionadas que combinam qualidade, conforto e
+            identidade. Estilo masculino autêntico para o homem contemporâneo.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="group relative overflow-hidden h-[450px] md:h-[600px] cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1000&auto=format&fit=crop"
+              class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+              alt="Coleção Casual - Camisas e calças casuais"
+            />
+            <div
+              class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"
+            ></div>
+            <div class="absolute bottom-10 left-10 text-white">
+              <p class="text-[10px] uppercase tracking-widest mb-2">
+                Casual Elegante
+              </p>
+              <h3 class="text-3xl font-luxury italic">Dia a Dia</h3>
+            </div>
+          </div>
+          <div
+            class="group relative overflow-hidden h-[450px] md:h-[600px] cursor-pointer md:mt-12"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1611312449412-6cefac5dc3e4?q=80&w=1000&auto=format&fit=crop"
+              class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+              alt="Coleção Social - Trajes e alfaiataria"
+            />
+            <div
+              class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"
+            ></div>
+            <div class="absolute bottom-10 left-10 text-white">
+              <p class="text-[10px] uppercase tracking-widest mb-2">
+                Social & Trabalho
+              </p>
+              <h3 class="text-3xl font-luxury italic">Alfaiataria Moderna</h3>
+            </div>
+          </div>
+          <div
+            class="group relative overflow-hidden h-[450px] md:h-[600px] cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1000&auto=format&fit=crop"
+              class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+              alt="Acessórios masculinos - Relógios, cintos, sapatos"
+            />
+            <div
+              class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"
+            ></div>
+            <div class="absolute bottom-10 left-10 text-white">
+              <p class="text-[10px] uppercase tracking-widest mb-2">Detalhes</p>
+              <h3 class="text-3xl font-luxury italic">Acessórios Premium</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section id="produtos" class="py-20 md:py-32 px-6 md:px-12 bg-ivory">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-luxury italic mb-4">
+            Essenciais Masculinos
+          </h2>
+          <!-- Category Filter -->
+          <div class="flex flex-wrap justify-center gap-3 mb-12">
+            <button
+              class="category-filter active px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-gold text-gold hover:bg-gold hover:text-white transition-all"
+              data-tag="todos"
+            >
+              Todos
+            </button>
+            <button
+              class="category-filter px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-gray-300 text-gray-600 hover:border-gold hover:text-gold transition-all"
+              data-tag="camisas"
+            >
+              Camisas
+            </button>
+            <button
+              class="category-filter px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-gray-300 text-gray-600 hover:border-gold hover:text-gold transition-all"
+              data-tag="calcas"
+            >
+              Calças
+            </button>
+            <button
+              class="category-filter px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-gray-300 text-gray-600 hover:border-gold hover:text-gold transition-all"
+              data-tag="shorts"
+            >
+              Shorts
+            </button>
+            <button
+              class="category-filter px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-gray-300 text-gray-600 hover:border-gold hover:text-gold transition-all"
+              data-tag="acessorios"
+            >
+              Acessórios
+            </button>
+          </div>
+          <div class="w-24 h-[1px] bg-gold mx-auto"></div>
+        </div>
+        <div
+          id="product-grid"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10"
+        ></div>
+      </div>
+    </section>
+
+    <!-- Localização -->
+    <section id="localizacao" class="py-20 md:py-32 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start mb-16 gap-8"
+        >
+          <div class="md:w-1/2">
+            <span
+              class="text-gold uppercase tracking-[0.3em] text-[10px] font-bold"
+              >Nosso Espaço</span
+            >
+            <h2 class="text-3xl md:text-5xl font-luxury mt-2 italic mb-8">
+              Onde Estilo Encontra Ambiente
+            </h2>
+
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-10 h-10 bg-ivory rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <i class="fa-solid fa-location-dot text-gold text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.2em] mb-2">
+                    Endereço
+                  </h3>
+                  <a
+                    href="https://maps.google.com/?q=R.+Padre+Cícero,+185+-+Centro,+Missão+Velha+-+CE,+63200-000"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-gray-600 hover:text-gold transition-colors text-sm leading-relaxed block"
+                  >
+                    <p class="font-medium">R. Padre Cícero, 185 - Centro</p>
+                    <p class="text-gray-500">Missão Velha - CE</p>
+                    <p class="text-gray-400 text-xs mt-1">63200-000</p>
+                  </a>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-10 h-10 bg-ivory rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <i class="fa-solid fa-clock text-gold text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.2em] mb-2">
+                    Horário de Atendimento
+                  </h3>
+                  <p class="text-gray-600 text-sm leading-relaxed">
+                    Segunda a Sexta: 9h às 18h<br />
+                    Sábado: 10h às 16h<br />
+                    <span class="text-gray-400 text-xs"
+                      >Consultoria de estilo com agendamento</span
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="pt-6 border-t border-gray-100">
+                <p class="text-gray-500 text-xs leading-relaxed">
+                  Nosso showroom foi projetado para oferecer uma experiência
+                  completa de compra. Ambiente exclusivo onde você pode
+                  experimentar as peças e receber orientação personalizada sobre
+                  estilo.
+                </p>
+              </div>
+
+              <a
+                href="https://maps.google.com/?q=R.+Padre+Cícero,+185+-+Centro,+Missão+Velha+-+CE,+63200-000"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-gold hover:text-black transition-colors group"
+              >
+                <span>Ver rotas no Google Maps</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square text-xs group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                ></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="md:w-1/2">
+            <!-- Container do Mapa -->
+            <div
+              class="relative rounded-sm overflow-hidden shadow-lux h-[400px] md:h-[500px] bg-gray-50"
+            >
+              <!-- Mapa do Google Maps -->
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.319200062144!2d-39.473512224918214!3d-7.077918792937763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7a40e3a02e24697%3A0xb6f6d9606d3f8895!2sR.%20Padre%20C%C3%ADcero%2C%20185%20-%20Centro%2C%20Miss%C3%A3o%20Velha%20-%20CE%2C%2063200-000!5e0!3m2!1spt-BR!2sbr!4v1697823456789!5m2!1spt-BR!2sbr"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Localização Vanguard Style - R. Padre Cícero, 185 - Centro, Missão Velha - CE"
+                aria-label="Mapa mostrando a localização da Vanguard Style em R. Padre Cícero, 185, Missão Velha - CE"
+                class="absolute inset-0"
+              ></iframe>
+
+              <!-- Overlay de carregamento -->
+              <div
+                class="absolute inset-0 bg-ivory flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none"
+                id="map-loading"
+              >
+                <div class="text-center">
+                  <i
+                    class="fa-solid fa-map-location-dot text-gold text-3xl mb-4 animate-pulse"
+                  ></i>
+                  <p class="text-xs uppercase tracking-widest text-gray-400">
+                    Carregando mapa...
+                  </p>
+                </div>
+              </div>
+
+              <!-- Controles customizados -->
+              <div class="absolute bottom-4 right-4 flex gap-2">
+                <button
+                  onclick="zoomMap('in')"
+                  class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-700 hover:text-gold transition-colors shadow-sm"
+                  aria-label="Aumentar zoom do mapa"
+                >
+                  <i class="fa-solid fa-plus text-xs"></i>
+                </button>
+                <button
+                  onclick="zoomMap('out')"
+                  class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-700 hover:text-gold transition-colors shadow-sm"
+                  aria-label="Diminuir zoom do mapa"
+                >
+                  <i class="fa-solid fa-minus text-xs"></i>
+                </button>
+                <button
+                  onclick="resetMap()"
+                  class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-700 hover:text-gold transition-colors shadow-sm"
+                  aria-label="Resetar mapa para posição inicial"
+                >
+                  <i class="fa-solid fa-location-crosshairs text-xs"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-4 text-center">
+              <p class="text-[9px] uppercase tracking-widest text-gray-400">
+                Clique no mapa para explorar a área • Use dois dedos para zoom
+                no mobile
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="bg-onyx text-white py-20 px-6 md:px-12 border-t border-white/5"
+    >
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16"
+      >
+        <div class="col-span-1 md:col-span-2">
+          <h3 class="text-3xl font-luxury tracking-widest mb-8">
+            VANGUARD STYLE
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed max-w-md font-light">
+            Moda masculina essencial. Qualidade, conforto e estilo em cada peça.
+            Para o homem que valoriza autenticidade e presença.
+          </p>
+        </div>
+        <div>
+          <h4
+            class="text-gold text-xs uppercase tracking-[0.2em] mb-6 font-bold"
+          >
+            Navegação
+          </h4>
+          <ul
+            class="flex flex-col gap-4 text-[10px] text-gray-400 uppercase tracking-widest"
+          >
+            <li>
+              <a href="#colecoes" class="hover:text-white transition-colors"
+                >Coleções</a
+              >
+            </li>
+            <li>
+              <a href="#produtos" class="hover:text-white transition-colors"
+                >Produtos</a
+              >
+            </li>
+            <li>
+              <a href="#sobre" class="hover:text-white transition-colors"
+                >Sobre Nós</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4
+            class="text-gold text-xs uppercase tracking-[0.2em] mb-6 font-bold"
+          >
+            Newsletter
+          </h4>
+          <div class="flex border-b border-gray-700 pb-2">
+            <input
+              type="email"
+              placeholder="SEU MELHOR E-MAIL"
+              class="bg-transparent border-none outline-none flex-grow text-[10px] uppercase tracking-widest"
+            />
+            <button class="text-gold hover:translate-x-1 transition-transform">
+              <i class="fa-solid fa-arrow-right-long"></i>
+            </button>
+          </div>
+          <p class="text-[8px] text-gray-500 mt-3 uppercase tracking-widest">
+            Receba lançamentos e ofertas exclusivas
+          </p>
+        </div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6"
+      >
+        <p class="text-[9px] uppercase tracking-[0.3em] text-gray-500">
+          © 2024 VANGUARD STYLE - MASCULINO ESSENTIALS
+        </p>
+        <div class="flex gap-8 text-gray-500">
+          <a href="#" class="hover:text-white"
+            ><i class="fa-brands fa-instagram text-lg"></i
+          ></a>
+          <a href="#" class="hover:text-white"
+            ><i class="fa-brands fa-whatsapp text-lg"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div
+      id="cart-sidebar"
+      class="fixed inset-0 z-[110] invisible transition-all duration-500"
+    >
+      <div
+        id="cart-overlay"
+        class="absolute inset-0 sidebar-overlay opacity-0 transition-opacity duration-500"
+      ></div>
+      <aside
+        class="absolute right-0 top-0 h-full w-full max-w-[450px] bg-white shadow-lux translate-x-full transition-transform duration-500 flex flex-col"
+      >
+        <div class="p-8 border-b flex justify-between items-center">
+          <h3 class="font-luxury text-2xl italic">Seu Carrinho</h3>
+          <button id="close-cart" class="text-gray-400 hover:text-black">
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+        <div
+          id="cart-items"
+          class="flex-grow overflow-y-auto p-8 space-y-6"
+        ></div>
+        <div class="p-8 border-t bg-ivory">
+          <div class="flex justify-between items-center mb-6">
+            <span
+              class="text-[10px] uppercase tracking-widest text-gray-500 font-bold"
+              >Total Estimado</span
+            >
+            <span id="cart-total" class="text-2xl font-luxury">R$ 0,00</span>
+          </div>
+          <button
+            id="btn-checkout-trigger"
+            class="w-full btn-premium bg-black text-white py-5 text-[10px] font-bold uppercase tracking-[0.3em]"
+          >
+            Finalizar Compra
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div
+      id="product-modal"
+      class="fixed inset-0 z-[120] invisible flex items-center justify-center p-4"
+    >
+      <div
+        id="modal-overlay"
+        class="absolute inset-0 sidebar-overlay opacity-0 transition-opacity duration-300"
+      ></div>
+      <div
+        class="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col md:flex-row shadow-lux scale-95 opacity-0 transition-all duration-500 rounded-sm"
+      >
+        <button
+          id="close-modal"
+          class="absolute top-6 right-6 z-10 text-gray-400 hover:text-onyx"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+        <div class="w-full md:w-1/2 bg-gray-50 h-[350px] md:h-auto">
+          <img id="modal-image" src="" class="w-full h-full object-cover" />
+        </div>
+        <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col">
+          <span
+            id="modal-category"
+            class="text-gold text-[10px] font-bold uppercase tracking-[0.3em] mb-2"
+          ></span>
+          <h3 id="modal-name" class="text-3xl font-luxury italic mb-4"></h3>
+          <p
+            id="modal-description"
+            class="text-gray-500 text-sm leading-relaxed mb-8 font-light"
+          ></p>
+
+          <!-- Tamanhos -->
+          <div class="mb-8">
+            <p class="text-[10px] uppercase tracking-widest font-bold mb-4">
+              Tamanho
+            </p>
+            <div id="modal-sizes" class="flex flex-wrap gap-3"></div>
+          </div>
+
+          <!-- Quantidade -->
+          <div class="mb-10">
+            <p class="text-[10px] uppercase tracking-widest font-bold mb-4">
+              Quantidade
+            </p>
+            <div class="flex items-center border border-gray-100 w-fit">
+              <button
+                id="btn-decrease-qty"
+                class="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-gray-400 transition-colors"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                id="modal-qty"
+                value="1"
+                min="1"
+                readonly
+                class="w-12 text-center text-xs font-bold outline-none bg-transparent"
+              />
+              <button
+                id="btn-increase-qty"
+                class="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-gray-400 transition-colors"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-auto pt-8 border-t">
+            <span id="modal-price" class="text-2xl font-luxury"></span>
+            <button
+              id="btn-add-to-cart"
+              class="bg-black text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-gold transition-colors"
+            >
+              Adicionar ao Carrinho
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div
+      id="checkout-modal"
+      class="fixed inset-0 z-[130] invisible flex items-center justify-center p-4"
+    >
+      <div
+        id="checkout-overlay"
+        class="absolute inset-0 sidebar-overlay opacity-0 transition-opacity duration-300"
+      ></div>
+      <div
+        class="relative bg-white w-full max-w-xl p-8 md:p-12 shadow-lux scale-95 opacity-0 transition-all duration-500 max-h-[95vh] overflow-y-auto rounded-sm"
+      >
+        <button
+          id="close-checkout"
+          class="absolute top-6 right-6 text-gray-400"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="flex justify-between items-center mb-8">
+          <h3 class="font-luxury text-3xl italic">Finalizar Pedido</h3>
+          <button
+            id="btn-clear-data"
+            class="text-[10px] uppercase tracking-widest text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"
+            title="Limpar todos os dados salvos"
+          >
+            <i class="fa-solid fa-trash text-xs"></i>
+            Limpar Dados
+          </button>
+        </div>
+
+        <!-- Feedback Mensagem -->
+        <div
+          id="save-feedback"
+          class="text-center text-[9px] uppercase tracking-widest text-gold mb-6 opacity-0 transition-opacity"
+        >
+          Dados serão salvos automaticamente
+        </div>
+
+        <form id="checkout-form" class="space-y-8">
+          <div class="space-y-4">
+            <h4
+              class="text-[10px] font-bold uppercase tracking-[0.2em] border-b pb-2 flex items-center justify-between"
+            >
+              <span>1. Dados Pessoais</span>
+              <span class="text-red-400">* Campos obrigatórios</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="cust-name"
+                  placeholder="NOME COMPLETO *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+              <div class="relative">
+                <input
+                  type="tel"
+                  id="cust-phone"
+                  placeholder="WHATSAPP / CELULAR *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h4
+              class="text-[10px] font-bold uppercase tracking-[0.2em] border-b pb-2"
+            >
+              2. Endereço de Entrega
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="cust-cep"
+                  placeholder="CEP *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+              <div class="relative col-span-1 md:col-span-2">
+                <input
+                  type="text"
+                  id="cust-street"
+                  placeholder="RUA / LOGRADOURO *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="cust-number"
+                  placeholder="NÚMERO *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+              <div class="relative md:col-span-2">
+                <input
+                  type="text"
+                  id="cust-neighborhood"
+                  placeholder="BAIRRO *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="cust-city"
+                  placeholder="CIDADE *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="cust-state"
+                  placeholder="ESTADO (UF) *"
+                  required
+                  autocomplete="off"
+                  class="chk-input text-xs"
+                />
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 right-0 text-red-400 text-xs"
+                  >*</span
+                >
+              </div>
+            </div>
+            <input
+              type="text"
+              id="cust-ref"
+              placeholder="PONTOS DE REFERÊNCIA (OPCIONAL)"
+              autocomplete="off"
+              class="chk-input text-xs"
+            />
+          </div>
+
+          <div class="space-y-4">
+            <h4
+              class="text-[10px] font-bold uppercase tracking-[0.2em] border-b pb-2"
+            >
+              3. Forma de Pagamento
+            </h4>
+            <div class="grid grid-cols-1 gap-3">
+              <label class="pay-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Pix"
+                  checked
+                  class="hidden"
+                />
+                <span class="pay-chip">
+                  <i class="fa-brands fa-pix text-lg mb-1"></i>
+                  PIX (Confirmação Imediata)
+                </span>
+              </label>
+              <label class="pay-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Cartão"
+                  class="hidden"
+                />
+                <span class="pay-chip">
+                  <i class="fa-solid fa-credit-card text-lg mb-1"></i>
+                  CARTÃO DE CRÉDITO
+                </span>
+              </label>
+              <label class="pay-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Dinheiro"
+                  class="hidden"
+                />
+                <span class="pay-chip">
+                  <i class="fa-solid fa-money-bill-wave text-lg mb-1"></i>
+                  DINHEIRO NA ENTREGA
+                </span>
+              </label>
+            </div>
+            <div
+              id="pix-details"
+              class="bg-ivory p-6 rounded-sm border border-gold/20"
+            >
+              <p
+                class="text-[9px] uppercase tracking-widest mb-2 text-center font-bold text-gold"
+              >
+                CHAVE PIX (CNPJ)
+              </p>
+              <p
+                class="font-bold text-sm tracking-widest text-onyx mb-4 text-center font-mono"
+              >
+                00.000.000/0001-00
+              </p>
+              <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3">
+                <p
+                  class="text-[8px] text-onyx leading-relaxed uppercase font-bold"
+                >
+                  <i
+                    class="fa-solid fa-exclamation-circle text-yellow-500 mr-1"
+                  ></i>
+                  Pedido confirmado SOMENTE após envio do comprovante para o
+                  WhatsApp.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="btn-confirm-order"
+            class="w-full bg-black text-white py-5 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-gold transition-colors mt-8"
+          >
+            Confirmar Pedido
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="toast"
+      class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] bg-black text-white px-8 py-3 text-[10px] uppercase tracking-[0.2em] translate-y-20 opacity-0 transition-all duration-500 pointer-events-none"
+    ></div>
+
+    <script src="/src/script.js"></script>
+    <script src="/src/produtos.js"></script>
+  </body>
+</html>
