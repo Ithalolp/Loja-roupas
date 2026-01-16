@@ -30,8 +30,7 @@ const PRODUCTS_DB = [
     price: 149,
     category: "camisas",
     tags: ["camisas"],
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
+    image: "",
     description:
       "Camiseta 100% algodão penteado, peso 180g. Corte regular fit, não deforma após lavagens. Cores sólidas e básicas para o dia a dia.",
     sizes: ["P", "M", "G", "GG"],
@@ -92,8 +91,7 @@ const PRODUCTS_DB = [
     price: 279,
     category: "shorts",
     tags: ["shorts"],
-    image:
-      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800",
+    image: "",
     description:
       "Short jeans em denim médio. Corte reto, comprimento no joelho. Versátil para dias quentes e estilo casual despojado.",
     sizes: ["38", "40", "42", "44"],
@@ -104,8 +102,7 @@ const PRODUCTS_DB = [
     price: 249,
     category: "shorts",
     tags: ["shorts"],
-    image:
-      "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?q=80&w=800",
+    image: "",
     description:
       "Short chino em algodão premium. Corte slim, acabamento refinado. Elegante e versátil para ocasiões casuais mais elaboradas.",
     sizes: ["38", "40", "42", "44"],
@@ -117,8 +114,7 @@ const PRODUCTS_DB = [
     price: 189,
     category: "acessorios",
     tags: ["acessorios"],
-    image:
-      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800",
+    image: "",
     description:
       "Cinto masculino em couro legítimo vegano. Fivela banhada a ouro, durabilidade garantida. Complemento essencial para qualquer visual.",
     sizes: ["90cm", "95cm", "100cm", "105cm", "110cm"],
