@@ -3,7 +3,7 @@ const PRODUCTS_DB = [
   {
     id: 1,
     name: "Camisa Social Slim Fit",
-    price: $,
+    price: 0,
     category: "camisas",
     tags: ["camisas"],
     image:
@@ -15,7 +15,7 @@ const PRODUCTS_DB = [
   {
     id: 2,
     name: "Camisa Casual de Linho",
-    price: $,
+    price: 0,
     category: "camisas",
     tags: ["camisas"],
     image:
@@ -27,7 +27,7 @@ const PRODUCTS_DB = [
   {
     id: 3,
     name: "Camiseta Básica Premium",
-    price: $,
+    price: 0,
     category: "camisas",
     tags: ["camisas"],
     image: "",
@@ -38,7 +38,7 @@ const PRODUCTS_DB = [
   {
     id: 4,
     name: "Bermuda Tactel Sport",
-    price: $,
+    price: 0,
     category: "camisas",
     tags: ["camisas"],
     image:
@@ -51,7 +51,7 @@ const PRODUCTS_DB = [
   {
     id: 5,
     name: "Calça Social Modern Fit",
-    price: $,
+    price: 0,
     category: "calcas",
     tags: ["calcas"],
     image:
@@ -61,9 +61,9 @@ const PRODUCTS_DB = [
     sizes: ["40", "42", "44", "46"],
   },
   {
-    id: $,
+    id: 6,
     name: "Calça Cargo Utility",
-    price: 329,
+    price: 0,
     category: "calcas",
     tags: ["calcas"],
     image:
@@ -75,7 +75,7 @@ const PRODUCTS_DB = [
   {
     id: 7,
     name: "Calça Jeans Premium Slim",
-    price: $,
+    price: 0,
     category: "calcas",
     tags: ["calcas"],
     image:
@@ -88,7 +88,7 @@ const PRODUCTS_DB = [
   {
     id: 8,
     name: "Short Jeans Clássico",
-    price: $,
+    price: 0,
     category: "shorts",
     tags: ["shorts"],
     image: "",
@@ -99,7 +99,7 @@ const PRODUCTS_DB = [
   {
     id: 9,
     name: "Short Chino Slim",
-    price: $,
+    price: 0,
     category: "shorts",
     tags: ["shorts"],
     image: "",
@@ -111,7 +111,7 @@ const PRODUCTS_DB = [
   {
     id: 10,
     name: "Cinto de Couro Legítimo",
-    price: $,
+    price: 0,
     category: "acessorios",
     tags: ["acessorios"],
     image: "",
@@ -122,7 +122,7 @@ const PRODUCTS_DB = [
   {
     id: 11,
     name: "Tênis Casual Premium",
-    price: $,
+    price: 0,
     category: "acessorios",
     tags: ["acessorios"],
     image:
@@ -134,7 +134,7 @@ const PRODUCTS_DB = [
   {
     id: 12,
     name: "Mochila Urbana",
-    price: $,
+    price: 0,
     category: "acessorios",
     tags: ["acessorios"],
     image:
@@ -144,4 +144,3 @@ const PRODUCTS_DB = [
     sizes: ["Único"],
   },
 ];
-
