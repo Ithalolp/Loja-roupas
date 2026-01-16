@@ -1,6 +1,6 @@
 const App = {
   state: {
-    cart: JSON.parse(localStorage.getItem("vogue_elite_cart")) || [],
+    cart: JSON.parse(localStorage.getItem("soares_style_cart")) || [],
     selectedProduct: null,
     selectedSize: null,
     currentQty: 1,
@@ -14,6 +14,8 @@ const App = {
     this.loadCustData();
     this.handlePaymentUI();
     this.setupCategoryFilters();
+    this.setupPhoneMask();
+    this.setupCEPValidation();
   },
 
   renderProducts() {
@@ -211,7 +213,10 @@ const App = {
 
     // Salvar no localStorage
     try {
-      localStorage.setItem("vogue_elite_cart", JSON.stringify(this.state.cart));
+      localStorage.setItem(
+        "soares_style_cart",
+        JSON.stringify(this.state.cart)
+      );
     } catch (e) {
       console.error("Erro ao salvar carrinho:", e);
     }
@@ -289,9 +294,19 @@ const App = {
   handlePaymentUI() {
     const method =
       document.querySelector('input[name="payment"]:checked')?.value || "Pix";
-    const pixBox = document.getElementById("pix-details");
-    if (pixBox) {
-      pixBox.style.display = method === "Pix" ? "block" : "none";
+
+    // Esconder todas as seções de detalhes primeiro
+    document.getElementById("pix-details").style.display = "none";
+    document.getElementById("cartao-details").style.display = "none";
+    document.getElementById("dinheiro-details").style.display = "none";
+
+    // Mostrar apenas a seção correspondente ao método selecionado
+    if (method === "Pix") {
+      document.getElementById("pix-details").style.display = "block";
+    } else if (method === "Cartão") {
+      document.getElementById("cartao-details").style.display = "block";
+    } else if (method === "Dinheiro") {
+      document.getElementById("dinheiro-details").style.display = "block";
     }
   },
 
@@ -314,7 +329,7 @@ const App = {
     };
 
     try {
-      localStorage.setItem("vogue_elite_customer", JSON.stringify(data));
+      localStorage.setItem("soares_style_customer", JSON.stringify(data));
       feedback.classList.remove("opacity-0");
       setTimeout(() => feedback.classList.add("opacity-0"), 1500);
     } catch (e) {
@@ -324,7 +339,7 @@ const App = {
 
   loadCustData() {
     try {
-      const saved = localStorage.getItem("vogue_elite_customer");
+      const saved = localStorage.getItem("soares_style_customer");
       if (saved) {
         const data = JSON.parse(saved);
 
@@ -365,7 +380,7 @@ const App = {
 
   clearCustomerData() {
     try {
-      localStorage.removeItem("vogue_elite_customer");
+      localStorage.removeItem("soares_style_customer");
 
       const fields = [
         "cust-name",
@@ -433,6 +448,20 @@ const App = {
         if (!firstInvalidField) firstInvalidField = field;
       }
     });
+
+    // Validar formato do telefone
+    const phoneField = document.getElementById("cust-phone");
+    if (phoneField && phoneField.value.trim() !== "") {
+      const phoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
+      if (!phoneRegex.test(phoneField.value)) {
+        phoneField.classList.add("invalid");
+        phoneField.classList.add("validation-error");
+        setTimeout(() => phoneField.classList.remove("validation-error"), 300);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = phoneField;
+        this.showToast("Formato de telefone inválido. Use (99) 99999-9999");
+      }
+    }
 
     // Focar no primeiro campo inválido
     if (firstInvalidField) {
@@ -507,16 +536,19 @@ const App = {
       // Codificar mensagem para URL
       const encodedMessage = encodeURIComponent(whatsappMessage);
 
-      // Número de WhatsApp (altere para o número correto)
-      const whatsappNumber = "5588994202290";
+      // Número de WhatsApp (ajuste para o número correto)
+      const whatsappNumber = "5588992518563";
 
       // Abrir WhatsApp em nova aba
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
       window.open(whatsappUrl, "_blank");
 
-      // Limpar sacola após envio
+      // Limpar sacola após envio (se você quiser que desapareça ao enviar)
       this.state.cart = [];
       this.updateCartUI();
+
+      // Limpar localStorage do carrinho (se você quiser que desapareça ao atualizar)
+      localStorage.removeItem("soares_style_cart");
 
       // Fechar modal após delay
       setTimeout(() => {
@@ -546,14 +578,14 @@ const App = {
       minute: "2-digit",
     });
 
-    let message = `*VOGUE ELITE - NOVO PEDIDO*\n\n`;
+    let message = `*SOARES STYLE - NOVO PEDIDO*\n\n`;
 
-    // Dados do cliente (ESCRITOS COMPLETAMENTE)
+    // Dados do cliente
     message += `*DADOS DO CLIENTE*\n`;
     message += `Nome: ${client.nome.toUpperCase()}\n`;
     message += `Telefone/WhatsApp: ${client.fone}\n\n`;
 
-    // Endereço (ESCRITOS COMPLETAMENTE)
+    // Endereço
     message += `*ENDEREÇO DE ENTREGA*\n`;
     message += `Rua: ${client.rua}\n`;
     message += `Número: ${client.numero}\n`;
@@ -566,7 +598,7 @@ const App = {
     }
     message += `\n`;
 
-    // Produtos (ESCRITOS COMPLETAMENTE)
+    // Produtos
     message += `*PRODUTOS SELECIONADOS*\n`;
     this.state.cart.forEach((item, index) => {
       const subtotal = item.price * item.qty;
@@ -587,21 +619,28 @@ const App = {
       minimumFractionDigits: 2,
     })}\n\n`;
 
-    // Pagamento
+    // Pagamento com observações específicas
     message += `*FORMA DE PAGAMENTO*\n`;
     message += `${client.pagamento}\n\n`;
 
-    // Aviso PIX (ESCRITO COMPLETAMENTE)
+    // Avisos específicos para cada método
     if (client.pagamento === "Pix") {
       message += `*IMPORTANTE - PAGAMENTO VIA PIX*\n`;
       message += `Chave PIX (CNPJ): 00.000.000/0001-00\n`;
       message += `Pedido confirmado SOMENTE após envio do comprovante para este WhatsApp.\n\n`;
+    } else if (client.pagamento === "Cartão") {
+      message += `*IMPORTANTE - PAGAMENTO COM CARTÃO*\n`;
+      message += `Para pagamento com cartão de crédito, entre em contato conosco para combinarmos a melhor forma de pagamento.\n\n`;
+    } else if (client.pagamento === "Dinheiro") {
+      message += `*IMPORTANTE - PAGAMENTO EM DINHEIRO*\n`;
+      message += `Pagamento em dinheiro realizado no momento da entrega.\n`;
+      message += `Certifique-se de ter o valor exato em mãos.\n\n`;
     }
 
     // Footer
     message += `--------------------------------\n`;
     message += `Data do pedido: ${timestamp}\n`;
-    message += `Pedido realizado via Website Vogue Elite`;
+    message += `Pedido realizado via Website Soares Style`;
 
     return message;
   },
@@ -725,12 +764,109 @@ const App = {
             existingMessage.remove();
           }
         }
-
-        // Log para debug (remova em produção)
-        console.log(`Filtro: ${category}, Produtos visíveis: ${visibleCount}`);
       });
     });
   },
+
+  setupPhoneMask() {
+    const phoneInput = document.getElementById("cust-phone");
+    if (!phoneInput) return;
+
+    phoneInput.addEventListener(
+      "input",
+      function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+
+        if (value.length > 11) {
+          value = value.substring(0, 11);
+        }
+
+        if (value.length > 10) {
+          // Formato: (99) 99999-9999
+          value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+        } else if (value.length > 6) {
+          // Formato: (99) 9999-9999
+          value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+        } else if (value.length > 2) {
+          value = value.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
+        } else if (value.length > 0) {
+          value = value.replace(/^(\d*)/, "($1");
+        }
+
+        e.target.value = value;
+
+        // Auto-save ao digitar
+        this.autoSaveCustData();
+      }.bind(this)
+    );
+  },
+
+  setupCEPValidation() {
+    const cepInput = document.getElementById("cust-cep");
+    if (!cepInput) return;
+
+    cepInput.addEventListener(
+      "input",
+      function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+
+        if (value.length > 8) {
+          value = value.substring(0, 8);
+        }
+
+        if (value.length > 5) {
+          value = value.replace(/^(\d{5})(\d{0,3}).*/, "$1-$2");
+        }
+
+        e.target.value = value;
+
+        // Auto-save ao digitar
+        this.autoSaveCustData();
+
+        // Buscar endereço automático quando CEP estiver completo
+        if (value.length === 9) {
+          // 99999-999
+          this.buscarEnderecoPorCEP(value);
+        }
+      }.bind(this)
+    );
+  },
+
+  buscarEnderecoPorCEP(cep) {
+    const cepLimpo = cep.replace(/\D/g, "");
+
+    if (cepLimpo.length !== 8) return;
+
+    // Mostrar loading
+    this.showToast("Buscando endereço...");
+
+    fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.erro) {
+          document.getElementById("cust-street").value = data.logradouro || "";
+          document.getElementById("cust-neighborhood").value =
+            data.bairro || "";
+          document.getElementById("cust-city").value = data.localidade || "";
+          document.getElementById("cust-state").value = data.uf || "";
+
+          // Focar no campo número após preencher
+          setTimeout(() => {
+            document.getElementById("cust-number").focus();
+          }, 100);
+
+          this.showToast("Endereço preenchido automaticamente");
+          this.autoSaveCustData();
+        } else {
+          this.showToast("CEP não encontrado");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar CEP:", error);
+        this.showToast("Erro ao buscar CEP");
+      });
+  },
+
   setupEventListeners() {
     // Event Delegation para produtos
     document.addEventListener("click", (e) => {
@@ -888,20 +1024,6 @@ const App = {
         this.toggleModal("checkout-modal", false);
         this.toggleCart(false);
         this.toggleMobileMenu(false);
-      }
-    });
-
-    // Navbar scroll effect
-    window.addEventListener("scroll", () => {
-      const nav = document.getElementById("navbar");
-      if (!nav) return;
-
-      if (window.scrollY > 50) {
-        nav.classList.add("shadow-sm", "py-2");
-        nav.classList.remove("py-4");
-      } else {
-        nav.classList.remove("shadow-sm", "py-2");
-        nav.classList.add("py-4");
       }
     });
   },
