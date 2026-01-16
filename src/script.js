@@ -150,7 +150,7 @@ const App = {
 
     this.updateCartUI();
     this.toggleModal("product-modal", false);
-    this.showToast("Peça adicionada à Bag");
+    this.showToast("Peça adicionada à Sacola com sucesso!");
 
     // Resetar estado
     this.state.selectedProduct = null;
@@ -1035,3 +1035,4 @@ if (document.readyState === "loading") {
 } else {
   App.init();
 }
+
