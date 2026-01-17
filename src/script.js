@@ -1,6 +1,6 @@
 const App = {
   state: {
-    cart: JSON.parse(localStorage.getItem("soares_style_cart")) || [],
+    cart: JSON.parse(sessionStorage.getItem("soares_style_cart")) || [],
     selectedProduct: null,
     selectedSize: null,
     currentQty: 1,
@@ -16,6 +16,7 @@ const App = {
     this.setupCategoryFilters();
     this.setupPhoneMask();
     this.setupCEPValidation();
+    this.setupBeforeUnload();
   },
 
   renderProducts() {
@@ -42,11 +43,11 @@ const App = {
           <h3 class="font-luxury text-xl mt-1 italic">${p.name}</h3>
           <p class="text-[11px] font-light text-gray-400 mt-1">R$ ${p.price.toLocaleString(
             "pt-BR",
-            { minimumFractionDigits: 2 }
+            { minimumFractionDigits: 2 },
           )}</p>
         </div>
       </div>
-    `
+    `,
     ).join("");
     this.initScrollReveal();
   },
@@ -65,24 +66,22 @@ const App = {
     document.getElementById("modal-description").innerText =
       product.description;
     document.getElementById("modal-qty").value = 1;
-    document.getElementById(
-      "modal-price"
-    ).innerText = `R$ ${product.price.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2,
-    })}`;
+    document.getElementById("modal-price").innerText =
+      `R$ ${product.price.toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+      })}`;
 
     const sizeBox = document.getElementById("modal-sizes");
     sizeBox.innerHTML = product.sizes
       .map(
         (s) => `
       <button data-size="${s}" class="size-btn border border-gray-100 px-5 py-2 text-[10px] hover:border-black transition-all ${
-          s === "U" ? "bg-black text-white border-black" : ""
-        }">${s}</button>
-    `
+        s === "U" ? "bg-black text-white border-black" : ""
+      }">${s}</button>
+    `,
       )
       .join("");
 
-    // Selecionar primeiro tamanho automaticamente se for único
     if (product.sizes.length === 1) {
       this.state.selectedSize = product.sizes[0];
       const firstBtn = sizeBox.querySelector(".size-btn");
@@ -107,7 +106,7 @@ const App = {
     document
       .querySelectorAll(".size-btn")
       .forEach((b) =>
-        b.classList.remove("bg-black", "text-white", "border-black")
+        b.classList.remove("bg-black", "text-white", "border-black"),
       );
     el.classList.add("bg-black", "text-white", "border-black");
   },
@@ -135,16 +134,13 @@ const App = {
       }-${Date.now()}`,
     };
 
-    // Verificar se já existe item igual no carrinho
     const existingIndex = this.state.cart.findIndex(
-      (i) => i.id === item.id && i.size === item.size
+      (i) => i.id === item.id && i.size === item.size,
     );
 
     if (existingIndex > -1) {
-      // Atualizar quantidade do item existente
       this.state.cart[existingIndex].qty += item.qty;
     } else {
-      // Adicionar novo item
       this.state.cart.push(item);
     }
 
@@ -152,7 +148,6 @@ const App = {
     this.toggleModal("product-modal", false);
     this.showToast("Peça adicionada à Sacola com sucesso!");
 
-    // Resetar estado
     this.state.selectedProduct = null;
     this.state.selectedSize = null;
     this.state.currentQty = 1;
@@ -170,16 +165,32 @@ const App = {
     countBadge.style.opacity = totalQty > 0 ? "1" : "0";
 
     if (this.state.cart.length === 0) {
-      container.innerHTML = `<div class="h-64 flex items-center justify-center opacity-30 text-[9px] uppercase tracking-widest">Sua Bag está vazia</div>`;
+      container.innerHTML = `
+        <div class="h-64 flex items-center justify-center opacity-30 text-[9px] uppercase tracking-widest">
+          Sua Bag está vazia
+          <br><br>
+          <p class="text-center text-[8px] text-gray-400 mt-2 max-w-xs">
+            Atenção: Para sua segurança e atualização de estoque, 
+            os itens da sacola são removidos se a página for atualizada.
+          </p>
+        </div>`;
     } else {
-      container.innerHTML = this.state.cart
-        .map(
-          (item, idx) => `
+      container.innerHTML =
+        `
+        <div class="mb-4 p-3 bg-yellow-50 border border-yellow-100 rounded-sm">
+          <p class="text-[8px] text-yellow-700 font-medium leading-relaxed">
+            <i class="fa-solid fa-exclamation-triangle mr-1"></i>
+            Atenção: Para sua segurança e atualização de estoque, 
+            os itens da sacola são removidos se a página for atualizada.
+          </p>
+        </div>
+        ` +
+        this.state.cart
+          .map(
+            (item, idx) => `
         <div class="flex gap-4 border-b border-gray-50 pb-6 animate-fade-in-up">
           <div class="w-16 h-20 bg-gray-50 flex-shrink-0">
-            <img src="${item.image}" class="w-full h-full object-cover" alt="${
-            item.name
-          }">
+            <img src="${item.image}" class="w-full h-full object-cover" alt="${item.name}">
           </div>
           <div class="flex-grow">
             <div class="flex justify-between">
@@ -198,24 +209,23 @@ const App = {
             </p>
           </div>
         </div>
-      `
-        )
-        .join("");
+      `,
+          )
+          .join("");
     }
 
     const subtotal = this.state.cart.reduce(
       (acc, curr) => acc + curr.price * curr.qty,
-      0
+      0,
     );
     totalLabel.innerText = `R$ ${subtotal.toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
     })}`;
 
-    // Salvar no localStorage
     try {
-      localStorage.setItem(
+      sessionStorage.setItem(
         "soares_style_cart",
-        JSON.stringify(this.state.cart)
+        JSON.stringify(this.state.cart),
       );
     } catch (e) {
       console.error("Erro ao salvar carrinho:", e);
@@ -295,18 +305,65 @@ const App = {
     const method =
       document.querySelector('input[name="payment"]:checked')?.value || "Pix";
 
-    // Esconder todas as seções de detalhes primeiro
     document.getElementById("pix-details").style.display = "none";
     document.getElementById("cartao-details").style.display = "none";
     document.getElementById("dinheiro-details").style.display = "none";
 
-    // Mostrar apenas a seção correspondente ao método selecionado
     if (method === "Pix") {
       document.getElementById("pix-details").style.display = "block";
     } else if (method === "Cartão") {
       document.getElementById("cartao-details").style.display = "block";
     } else if (method === "Dinheiro") {
       document.getElementById("dinheiro-details").style.display = "block";
+    }
+
+    this.updatePaymentWarnings(method);
+  },
+
+  updatePaymentWarnings(paymentMethod) {
+    const oldWarnings = document.querySelectorAll(".payment-warning");
+    oldWarnings.forEach((warning) => warning.remove());
+
+    const paymentSection = document.querySelector(
+      "#checkout-form > div:nth-child(3)",
+    );
+
+    if (paymentSection) {
+      let warningMessage = "";
+      let warningClass = "";
+
+      if (paymentMethod === "Pix") {
+        warningMessage =
+          "O comprovante deve ser enviado junto com o pedido no WhatsApp para validação imediata.";
+        warningClass = "bg-blue-50 border-blue-200 text-blue-700";
+      } else if (paymentMethod === "Cartão") {
+        warningMessage =
+          "Sujeito a taxas da operadora. Verifique o valor final no momento do atendimento.";
+        warningClass = "bg-yellow-50 border-yellow-200 text-yellow-700";
+      } else if (paymentMethod === "Dinheiro") {
+        warningMessage =
+          "Pagamento em dinheiro no momento da entrega. Tenha o valor exato em mãos.";
+        warningClass = "bg-green-50 border-green-200 text-green-700";
+      }
+
+      if (warningMessage) {
+        const warningDiv = document.createElement("div");
+        warningDiv.className = `payment-warning p-3 rounded-sm border mt-4 text-[9px] font-medium leading-relaxed ${warningClass}`;
+        warningDiv.innerHTML = `
+          <i class="fa-solid fa-info-circle mr-1"></i>
+          ${warningMessage}
+        `;
+
+        const paymentOptions = paymentSection.querySelector(".grid");
+        if (paymentOptions) {
+          paymentOptions.parentNode.insertBefore(
+            warningDiv,
+            paymentOptions.nextSibling,
+          );
+        } else {
+          paymentSection.appendChild(warningDiv);
+        }
+      }
     }
   },
 
@@ -362,10 +419,9 @@ const App = {
           }
         });
 
-        // Restaurar método de pagamento
         if (data.payment) {
           const paymentRadio = document.querySelector(
-            `input[value="${data.payment}"]`
+            `input[value="${data.payment}"]`,
           );
           if (paymentRadio) {
             paymentRadio.checked = true;
@@ -402,7 +458,6 @@ const App = {
         }
       });
 
-      // Resetar pagamento para Pix
       const pixRadio = document.querySelector('input[value="Pix"]');
       if (pixRadio) {
         pixRadio.checked = true;
@@ -431,13 +486,11 @@ const App = {
     let isValid = true;
     let firstInvalidField = null;
 
-    // Remover erros anteriores
     requiredFields.forEach((id) => {
       const field = document.getElementById(id);
       if (field) field.classList.remove("invalid", "validation-error");
     });
 
-    // Validar cada campo
     requiredFields.forEach((id) => {
       const field = document.getElementById(id);
       if (!field || field.value.trim() === "") {
@@ -449,7 +502,6 @@ const App = {
       }
     });
 
-    // Validar formato do telefone
     const phoneField = document.getElementById("cust-phone");
     if (phoneField && phoneField.value.trim() !== "") {
       const phoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
@@ -463,7 +515,6 @@ const App = {
       }
     }
 
-    // Focar no primeiro campo inválido
     if (firstInvalidField) {
       firstInvalidField.focus();
     }
@@ -490,25 +541,21 @@ const App = {
   handleCheckout(e) {
     e.preventDefault();
 
-    // Evitar múltiplos envios
     if (this.state.isProcessingOrder) {
       this.showToast("Aguarde, processando pedido anterior...");
       return;
     }
 
-    // Validar campos obrigatórios
     if (!this.validateCheckoutForm()) {
       this.showToast("Preencha todos os campos obrigatórios (*)");
       return;
     }
 
-    // Validar sacola
     if (this.state.cart.length === 0) {
       this.showToast("Sua sacola está vazia");
       return;
     }
 
-    // Iniciar processamento
     this.state.isProcessingOrder = true;
     const confirmBtn = document.getElementById("btn-confirm-order");
     const originalText = confirmBtn.textContent;
@@ -517,49 +564,38 @@ const App = {
     confirmBtn.classList.add("opacity-70");
 
     try {
-      // Obter dados do formulário
       const client = this.getFormData();
 
-      // Calcular total
       const total = this.state.cart.reduce(
         (acc, curr) => acc + curr.price * curr.qty,
-        0
+        0,
       );
 
-      // Formatar mensagem do WhatsApp
       const whatsappMessage = this.formatWhatsAppMessage(client, total);
 
-      // DEBUG no console
       console.log("Mensagem WhatsApp gerada:");
       console.log(whatsappMessage);
 
-      // Codificar mensagem para URL
       const encodedMessage = encodeURIComponent(whatsappMessage);
 
-      // Número de WhatsApp (ajuste para o número correto)
       const whatsappNumber = "5588992518563";
 
-      // Abrir WhatsApp em nova aba
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-      window.open(whatsappUrl, "_blank");
 
-      // Limpar sacola após envio (se você quiser que desapareça ao enviar)
       this.state.cart = [];
       this.updateCartUI();
+      sessionStorage.removeItem("soares_style_cart");
 
-      // Limpar localStorage do carrinho (se você quiser que desapareça ao atualizar)
-      localStorage.removeItem("soares_style_cart");
+      window.open(whatsappUrl, "_blank");
 
-      // Fechar modal após delay
       setTimeout(() => {
         this.toggleModal("checkout-modal", false);
-        this.showToast("✅ Pedido enviado com sucesso!");
-      }, 1000);
+        this.showToast("✅ Pedido enviado com sucesso! Sacola esvaziada.");
+      }, 800);
     } catch (error) {
       console.error("Erro no checkout:", error);
       this.showToast("❌ Erro ao processar pedido. Tente novamente.");
     } finally {
-      // Restaurar botão após 2 segundos
       setTimeout(() => {
         this.state.isProcessingOrder = false;
         confirmBtn.textContent = originalText;
@@ -580,12 +616,10 @@ const App = {
 
     let message = `*SOARES STYLE - NOVO PEDIDO*\n\n`;
 
-    // Dados do cliente
     message += `*DADOS DO CLIENTE*\n`;
     message += `Nome: ${client.nome.toUpperCase()}\n`;
     message += `Telefone/WhatsApp: ${client.fone}\n\n`;
 
-    // Endereço
     message += `*ENDEREÇO DE ENTREGA*\n`;
     message += `Rua: ${client.rua}\n`;
     message += `Número: ${client.numero}\n`;
@@ -598,7 +632,6 @@ const App = {
     }
     message += `\n`;
 
-    // Produtos
     message += `*PRODUTOS SELECIONADOS*\n`;
     this.state.cart.forEach((item, index) => {
       const subtotal = item.price * item.qty;
@@ -613,31 +646,27 @@ const App = {
       })}\n\n`;
     });
 
-    // Total
     message += `*TOTAL DO PEDIDO*\n`;
     message += `R$ ${total.toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
     })}\n\n`;
 
-    // Pagamento com observações específicas
     message += `*FORMA DE PAGAMENTO*\n`;
     message += `${client.pagamento}\n\n`;
 
-    // Avisos específicos para cada método
     if (client.pagamento === "Pix") {
       message += `*IMPORTANTE - PAGAMENTO VIA PIX*\n`;
       message += `Chave PIX (CNPJ): 00.000.000/0001-00\n`;
-      message += `Pedido confirmado SOMENTE após envio do comprovante para este WhatsApp.\n\n`;
+      message += `O comprovante deve ser enviado junto com o pedido no WhatsApp para validação imediata.\n\n`;
     } else if (client.pagamento === "Cartão") {
       message += `*IMPORTANTE - PAGAMENTO COM CARTÃO*\n`;
-      message += `Para pagamento com cartão de crédito, entre em contato conosco para combinarmos a melhor forma de pagamento.\n\n`;
+      message += `Sujeito a taxas da operadora. Verifique o valor final no momento do atendimento.\n\n`;
     } else if (client.pagamento === "Dinheiro") {
       message += `*IMPORTANTE - PAGAMENTO EM DINHEIRO*\n`;
       message += `Pagamento em dinheiro realizado no momento da entrega.\n`;
       message += `Certifique-se de ter o valor exato em mãos.\n\n`;
     }
 
-    // Footer
     message += `--------------------------------\n`;
     message += `Data do pedido: ${timestamp}\n`;
     message += `Pedido realizado via Website Soares Style`;
@@ -667,7 +696,7 @@ const App = {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
   },
@@ -679,20 +708,18 @@ const App = {
       button.addEventListener("click", () => {
         const category = button.getAttribute("data-tag");
 
-        // Atualizar botão ativo
         buttons.forEach((btn) => {
           btn.classList.remove(
             "active",
             "bg-gold",
             "text-white",
-            "border-gold"
+            "border-gold",
           );
           btn.classList.add("text-gray-600", "border-gray-300");
         });
         button.classList.add("active", "bg-gold", "text-white", "border-gold");
         button.classList.remove("text-gray-600", "border-gray-300");
 
-        // Filtrar produtos
         const products = document.querySelectorAll(".product-card");
         let visibleCount = 0;
 
@@ -705,22 +732,18 @@ const App = {
             return;
           }
 
-          // Normalizar categorias para comparação
           const productCategory = productData.category.toLowerCase();
           const filterCategory = category.toLowerCase();
 
-          // Mostrar todos ou filtrar por categoria
           if (category === "todos" || productCategory === filterCategory) {
             product.style.display = "block";
             visibleCount++;
 
-            // Animar entrada
             product.classList.remove("opacity-0");
             setTimeout(() => {
               product.classList.add("animate-fade-in-up");
             }, 50);
           } else {
-            // Animar saída
             product.classList.remove("animate-fade-in-up");
             setTimeout(() => {
               product.style.display = "none";
@@ -729,7 +752,6 @@ const App = {
           }
         });
 
-        // Mostrar mensagem se nenhum produto for encontrado
         const grid = document.getElementById("product-grid");
         const existingMessage = grid.querySelector(".no-products-message");
 
@@ -747,7 +769,6 @@ const App = {
           `;
             grid.appendChild(message);
 
-            // Adicionar evento ao botão "Voltar para Todos"
             setTimeout(() => {
               const backBtn = message.querySelector(".back-to-all-btn");
               if (backBtn) {
@@ -759,7 +780,6 @@ const App = {
             }, 100);
           }
         } else {
-          // Remover mensagem se existir
           if (existingMessage) {
             existingMessage.remove();
           }
@@ -782,10 +802,8 @@ const App = {
         }
 
         if (value.length > 10) {
-          // Formato: (99) 99999-9999
           value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
         } else if (value.length > 6) {
-          // Formato: (99) 9999-9999
           value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
         } else if (value.length > 2) {
           value = value.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
@@ -795,9 +813,8 @@ const App = {
 
         e.target.value = value;
 
-        // Auto-save ao digitar
         this.autoSaveCustData();
-      }.bind(this)
+      }.bind(this),
     );
   },
 
@@ -820,15 +837,12 @@ const App = {
 
         e.target.value = value;
 
-        // Auto-save ao digitar
         this.autoSaveCustData();
 
-        // Buscar endereço automático quando CEP estiver completo
         if (value.length === 9) {
-          // 99999-999
           this.buscarEnderecoPorCEP(value);
         }
-      }.bind(this)
+      }.bind(this),
     );
   },
 
@@ -837,7 +851,6 @@ const App = {
 
     if (cepLimpo.length !== 8) return;
 
-    // Mostrar loading
     this.showToast("Buscando endereço...");
 
     fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
@@ -850,7 +863,6 @@ const App = {
           document.getElementById("cust-city").value = data.localidade || "";
           document.getElementById("cust-state").value = data.uf || "";
 
-          // Focar no campo número após preencher
           setTimeout(() => {
             document.getElementById("cust-number").focus();
           }, 100);
@@ -867,10 +879,14 @@ const App = {
       });
   },
 
+  setupBeforeUnload() {
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.removeItem("soares_style_cart");
+    });
+  },
+
   setupEventListeners() {
-    // Event Delegation para produtos
     document.addEventListener("click", (e) => {
-      // Botões "Explorar Detalhes"
       if (
         e.target.classList.contains("btn-explore") ||
         e.target.closest(".btn-explore")
@@ -884,7 +900,6 @@ const App = {
         }
       }
 
-      // Botões de tamanho no modal
       if (
         e.target.classList.contains("size-btn") ||
         e.target.closest(".size-btn")
@@ -898,7 +913,6 @@ const App = {
         }
       }
 
-      // Botões de remover item do carrinho
       if (
         e.target.classList.contains("btn-remove-item") ||
         e.target.closest(".btn-remove-item")
@@ -913,7 +927,6 @@ const App = {
       }
     });
 
-    // Nav & Cart
     document
       .getElementById("btn-cart")
       ?.addEventListener("click", () => this.toggleCart(true));
@@ -924,7 +937,6 @@ const App = {
       .getElementById("cart-overlay")
       ?.addEventListener("click", () => this.toggleCart(false));
 
-    // Botões de quantidade no modal
     document
       .getElementById("btn-decrease-qty")
       ?.addEventListener("click", () => this.changeQty(-1));
@@ -932,12 +944,10 @@ const App = {
       .getElementById("btn-increase-qty")
       ?.addEventListener("click", () => this.changeQty(1));
 
-    // Botão "Adicionar à Bag" no modal
     document
       .getElementById("btn-add-to-cart")
       ?.addEventListener("click", () => this.addToCart());
 
-    // Mobile Menu
     document
       .getElementById("btn-mobile-menu")
       ?.addEventListener("click", () => this.toggleMobileMenu(true));
@@ -952,19 +962,17 @@ const App = {
       l.addEventListener("click", () => this.toggleMobileMenu(false));
     });
 
-    // Modals
     document
       .getElementById("close-modal")
       ?.addEventListener("click", () =>
-        this.toggleModal("product-modal", false)
+        this.toggleModal("product-modal", false),
       );
     document
       .getElementById("modal-overlay")
       ?.addEventListener("click", () =>
-        this.toggleModal("product-modal", false)
+        this.toggleModal("product-modal", false),
       );
 
-    // Checkout
     document
       .getElementById("btn-checkout-trigger")
       ?.addEventListener("click", () => {
@@ -979,15 +987,14 @@ const App = {
     document
       .getElementById("close-checkout")
       ?.addEventListener("click", () =>
-        this.toggleModal("checkout-modal", false)
+        this.toggleModal("checkout-modal", false),
       );
     document
       .getElementById("checkout-overlay")
       ?.addEventListener("click", () =>
-        this.toggleModal("checkout-modal", false)
+        this.toggleModal("checkout-modal", false),
       );
 
-    // Botão para limpar dados
     document
       .getElementById("btn-clear-data")
       ?.addEventListener("click", (e) => {
@@ -995,21 +1002,18 @@ const App = {
         this.clearCustomerData();
       });
 
-    // Formulário de checkout
     const checkoutForm = document.getElementById("checkout-form");
     if (checkoutForm) {
       checkoutForm.addEventListener("submit", (e) => this.handleCheckout(e));
     }
 
-    // Auto-save nos inputs do checkout
     const inputs = document.querySelectorAll(
-      "#checkout-form input:not([type='radio'])"
+      "#checkout-form input:not([type='radio'])",
     );
     inputs.forEach((input) => {
       input.addEventListener("input", () => this.autoSaveCustData());
     });
 
-    // Auto-save nos radio buttons de pagamento
     document.querySelectorAll('input[name="payment"]').forEach((radio) => {
       radio.addEventListener("change", () => {
         this.autoSaveCustData();
@@ -1017,7 +1021,6 @@ const App = {
       });
     });
 
-    // Fechar modais com ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         this.toggleModal("product-modal", false);
@@ -1029,10 +1032,12 @@ const App = {
   },
 };
 
-// Inicializar quando o DOM estiver pronto
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => App.init());
 } else {
   App.init();
 }
 
+window.addEventListener("pagehide", () => {
+  sessionStorage.removeItem("soares_style_cart");
+});
