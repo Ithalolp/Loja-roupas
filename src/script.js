@@ -17,6 +17,29 @@ const App = {
     this.setupPhoneMask();
     this.setupCEPValidation();
     this.setupBeforeUnload();
+    this.setupNavbarScroll(); // Adicionado para navbar transparente
+  },
+
+  setupNavbarScroll() {
+    window.addEventListener("scroll", () => {
+      const navbar = document.getElementById("navbar");
+      if (window.scrollY > 50) {
+        navbar.classList.add("nav-scrolled");
+        navbar.classList.remove("glass-header");
+      } else {
+        navbar.classList.remove("nav-scrolled");
+        navbar.classList.add("glass-header");
+      }
+    });
+
+    // Inicializar estado do navbar
+    window.addEventListener("load", () => {
+      const navbar = document.getElementById("navbar");
+      if (window.scrollY > 50) {
+        navbar.classList.add("nav-scrolled");
+        navbar.classList.remove("glass-header");
+      }
+    });
   },
 
   renderProducts() {
@@ -167,7 +190,7 @@ const App = {
     if (this.state.cart.length === 0) {
       container.innerHTML = `
         <div class="h-64 flex items-center justify-center opacity-30 text-[9px] uppercase tracking-widest">
-          Sua Bag está vazia
+          <div class="text-center"> Sacola Vazia
           <br><br>
           <p class="text-center text-[8px] text-gray-400 mt-2 max-w-xs">
             Atenção: Para sua segurança e atualização de estoque, 
