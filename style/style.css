@@ -337,8 +337,6 @@ button:focus-visible {
     transform: translateY(0);
   }
 }
-/* Adicionar ao final do seu style.css existente */
-
 /* Ajustes específicos para moda masculina */
 .font-luxury {
   letter-spacing: -0.01em; /* Levemente mais compacto para masculino */
@@ -370,4 +368,46 @@ button:focus-visible {
 .map-controls button:hover {
   background: #d4af37;
   color: #0f0f0f;
+}
+.payment-warning {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#cart-items .bg-yellow-50 {
+  border-left: 3px solid #D4AF37;
+}
+
+.invalid {
+  border-color: #ef4444 !important;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.validation-error {
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.cart-footer-note {
+  font-size: 8px;
+  line-height: 1.4;
+  color: #6b7280;
+  text-align: center;
+  padding: 8px;
+  border-top: 1px solid #f3f4f6;
+  background-color: #f9fafb;
 }
