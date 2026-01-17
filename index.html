@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
@@ -60,7 +60,6 @@
     </script>
   </head>
   <body class="bg-ivory text-onyx">
-    <!-- Navigation -->
     <nav
       id="navbar"
       class="fixed top-0 w-full z-50 glass-header border-b border-white/20 py-4 transition-all duration-500 px-6 md:px-12"
@@ -73,7 +72,6 @@
           Soares <span class="text-gold">Style</span>
         </a>
 
-        <!-- Desktop Menu -->
         <div
           class="hidden md:flex gap-10 text-[11px] font-medium tracking-[0.3em] uppercase text-gray-500"
         >
@@ -107,7 +105,6 @@
       </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
     <div
       id="mobile-menu"
       class="fixed inset-0 z-[100] invisible transition-all duration-500"
@@ -145,7 +142,6 @@
       </aside>
     </div>
 
-    <!-- Hero -->
     <header
       class="relative h-[99vh] md:h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]"
     >
@@ -185,7 +181,6 @@
       </div>
     </header>
 
-    <!-- Categories -->
     <section id="colecoes" class="py-20 md:py-32 px-6 md:px-12 bg-white">
       <div class="max-w-7xl mx-auto">
         <div
@@ -262,14 +257,12 @@
       </div>
     </section>
 
-    <!-- Product Grid -->
     <section id="produtos" class="py-20 md:py-32 px-6 md:px-12 bg-ivory">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
           <h2 class="text-4xl md:text-5xl font-luxury italic mb-4">
             Produtos Masculinos
           </h2>
-          <!-- Category Filter -->
           <div class="flex flex-wrap justify-center gap-3 mb-12">
             <button
               class="category-filter active px-6 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-gold text-gold hover:bg-gold hover:text-white transition-all"
@@ -311,7 +304,6 @@
       </div>
     </section>
 
-    <!-- Localização -->
     <section id="localizacao" class="py-20 md:py-32 px-6 md:px-12 bg-white">
       <div class="max-w-7xl mx-auto">
         <div
@@ -394,11 +386,9 @@
           </div>
 
           <div class="md:w-1/2">
-            <!-- Container do Mapa -->
             <div
               class="relative rounded-sm overflow-hidden shadow-lux h-[400px] md:h-[500px] bg-gray-50"
             >
-              <!-- Mapa do Google Maps -->
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.319200062144!2d-39.473512224918214!3d-7.077918792937763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7a40e3a02e24697%3A0xb6f6d9606d3f8895!2sR.%20Padre%20C%C3%ADcero%2C%20185%20-%20Centro%2C%20Miss%C3%A3o%20Velha%20-%20CE%2C%2063200-000!5e0!3m2!1spt-BR!2sbr!4v1697823456789!5m2!1spt-BR!2sbr"
                 width="100%"
@@ -412,7 +402,6 @@
                 class="absolute inset-0"
               ></iframe>
 
-              <!-- Overlay de carregamento -->
               <div
                 class="absolute inset-0 bg-ivory flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none"
                 id="map-loading"
@@ -427,7 +416,6 @@
                 </div>
               </div>
 
-              <!-- Controles customizados -->
               <div class="absolute bottom-4 right-4 flex gap-2">
                 <button
                   onclick="zoomMap('in')"
@@ -464,7 +452,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <footer
       class="bg-onyx text-white py-20 px-6 md:px-12 border-t border-white/5"
     >
@@ -538,18 +525,12 @@
       >
         <p class="text-[9px] uppercase tracking-[0.3em] text-gray-500">
           © 2024 SOARES STYLE - MASCULINO ESSENCIAL
+          <br />
+          <br />
+          <a href="https://www.instagram.com/ithalo.dev/" target="_blank"
+            >Desenvolvido por: Antonio Ithalo</a
+          >
         </p>
-        <a
-          href="https://www.linkedin.com/in/antonio-ithalo-3807813a2/"
-          style="
-            text-align: center;
-            padding-top: 5px;
-            font-size: 0.8rem;
-            color: #7c7b7b;
-          "
-          target="_blank"
-          >Desenvolvido por: Antonio Ithalo</a
-        >
         <div class="flex gap-8 text-gray-500">
           <a href="#" class="hover:text-gold transition-colors"
             ><i class="fa-brands fa-instagram text-lg"></i
@@ -560,7 +541,7 @@
         </div>
       </div>
     </footer>
-    <!-- CART SIDEBAR -->
+
     <div
       id="cart-sidebar"
       class="fixed inset-0 z-[110] invisible transition-all duration-500"
@@ -596,11 +577,15 @@
           >
             Finalizar Compra
           </button>
+          <div class="cart-footer-note mt-4">
+            <i class="fa-solid fa-exclamation-triangle mr-1"></i>
+            Atenção: Para sua segurança e atualização de estoque, os itens da
+            sacola são removidos se a página for atualizada.
+          </div>
         </div>
       </aside>
     </div>
 
-    <!-- PRODUCT MODAL -->
     <div
       id="product-modal"
       class="fixed inset-0 z-[120] invisible flex items-center justify-center p-4"
@@ -632,7 +617,6 @@
             class="text-gray-500 text-sm leading-relaxed mb-8 font-light"
           ></p>
 
-          <!-- Tamanhos -->
           <div class="mb-8">
             <p class="text-[10px] uppercase tracking-widest font-bold mb-4">
               Tamanho
@@ -640,7 +624,6 @@
             <div id="modal-sizes" class="flex flex-wrap gap-3"></div>
           </div>
 
-          <!-- Quantidade -->
           <div class="mb-10">
             <p class="text-[10px] uppercase tracking-widest font-bold mb-4">
               Quantidade
@@ -682,7 +665,6 @@
       </div>
     </div>
 
-    <!-- CHECKOUT MODAL -->
     <div
       id="checkout-modal"
       class="fixed inset-0 z-[130] invisible flex items-center justify-center p-4"
@@ -713,7 +695,6 @@
           </button>
         </div>
 
-        <!-- Feedback Mensagem -->
         <div
           id="save-feedback"
           class="text-center text-[9px] uppercase tracking-widest text-gold mb-6 opacity-0 transition-opacity"
@@ -913,7 +894,6 @@
               </label>
             </div>
 
-            <!-- Detalhes Pix (só mostra quando Pix estiver selecionado) -->
             <div
               id="pix-details"
               class="bg-ivory p-6 rounded-sm border border-gold/20"
@@ -928,52 +908,17 @@
               >
                 00.000.000/0001-00
               </p>
-              <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3">
-                <p
-                  class="text-[8px] text-onyx leading-relaxed uppercase font-bold"
-                >
-                  <i
-                    class="fa-solid fa-exclamation-circle text-yellow-500 mr-1"
-                  ></i>
-                  Pedido confirmado SOMENTE após envio do comprovante para o
-                  WhatsApp.
-                </p>
-              </div>
             </div>
 
-            <!-- Detalhes Cartão (só mostra quando Cartão estiver selecionado) -->
             <div
               id="cartao-details"
               class="bg-ivory p-6 rounded-sm border border-gold/20 hidden"
-            >
-              <div class="bg-blue-50 border-l-4 border-blue-400 p-3">
-                <p
-                  class="text-[8px] text-onyx leading-relaxed uppercase font-bold"
-                >
-                  <i class="fa-solid fa-credit-card text-blue-500 mr-1"></i>
-                  Para pagamento com cartão de crédito, entre em contato conosco
-                  para combinarmos a melhor forma de pagamento.
-                </p>
-              </div>
-            </div>
+            ></div>
 
-            <!-- Detalhes Dinheiro (só mostra quando Dinheiro estiver selecionado) -->
             <div
               id="dinheiro-details"
               class="bg-ivory p-6 rounded-sm border border-gold/20 hidden"
-            >
-              <div class="bg-green-50 border-l-4 border-green-400 p-3">
-                <p
-                  class="text-[8px] text-onyx leading-relaxed uppercase font-bold"
-                >
-                  <i
-                    class="fa-solid fa-money-bill-wave text-green-500 mr-1"
-                  ></i>
-                  Pagamento em dinheiro realizado no momento da entrega.
-                  Certifique-se de ter o valor exato em mãos.
-                </p>
-              </div>
-            </div>
+            ></div>
           </div>
 
           <button
