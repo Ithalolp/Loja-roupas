@@ -942,6 +942,10 @@
       id="toast"
       class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] bg-black text-white px-8 py-3 text-[10px] uppercase tracking-[0.2em] translate-y-20 opacity-0 transition-all duration-500 pointer-events-none"
     ></div>
+    <script>
+      // Suprime aviso do Tailwind CDN
+      console.warn = function () {};
+    </script>
 
     <script src="/src/produtos.js"></script>
     <script src="/src/gsheets-loader.js"></script>
