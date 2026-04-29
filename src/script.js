@@ -68,8 +68,6 @@ const App = {
       setTimeout(() => {
         this.setupCategoryFilters();
       }, 100);
-
-      this.showToast("✅ Produtos atualizados do estoque");
     } catch (error) {
       console.error("❌ Erro ao carregar planilha:", error);
       this.showToast("⚠️ Erro ao carregar dados da planilha");
