@@ -115,6 +115,43 @@ const App = {
       const existingIndicator = card.querySelector(".stock-indicator");
       if (existingIndicator) existingIndicator.remove();
 
+      // Atualiza o botão "Explorar Detalhes"
+      const exploreBtn = card.querySelector(".btn-explore");
+      if (exploreBtn) {
+        if (!product._stock.inStock) {
+          exploreBtn.textContent = "Indisponível";
+          exploreBtn.classList.add("opacity-50", "cursor-not-allowed");
+          exploreBtn.style.pointerEvents = "none";
+        } else {
+          exploreBtn.textContent = "Explorar Detalhes";
+          exploreBtn.classList.remove("opacity-50", "cursor-not-allowed");
+          exploreBtn.style.pointerEvents = "auto";
+        }
+      }
+
+      // Atualiza a imagem com overlay de indisponível
+      const imageContainer = card.querySelector(".relative.aspect-\\[3\\/4\\]");
+      if (imageContainer) {
+        // Remove overlay existente
+        const existingOverlay = imageContainer.querySelector(
+          ".out-of-stock-overlay",
+        );
+        if (existingOverlay) existingOverlay.remove();
+
+        if (!product._stock.inStock) {
+          // Adiciona overlay de produto indisponível
+          const overlay = document.createElement("div");
+          overlay.className =
+            "out-of-stock-overlay absolute inset-0 bg-black/40 flex items-center justify-center";
+          overlay.innerHTML = `
+            <span class="bg-red-500 text-white text-[10px] px-4 py-2 rounded-sm uppercase tracking-wider font-bold">
+              Esgotado
+            </span>
+          `;
+          imageContainer.appendChild(overlay);
+        }
+      }
+
       // Cria novo indicador
       const indicator = document.createElement("div");
       indicator.className = "stock-indicator absolute top-2 right-2 z-10";
@@ -137,7 +174,6 @@ const App = {
         `;
       }
 
-      const imageContainer = card.querySelector(".relative.aspect-\\[3\\/4\\]");
       if (imageContainer) {
         imageContainer.appendChild(indicator);
       }
@@ -195,17 +231,30 @@ const App = {
     grid.innerHTML = PRODUCTS_DB.map((p) => {
       // Se não tem imagem, usa o SVG
       const imageUrl = p.image || fallbackImage;
+      const isInStock = p._stock ? p._stock.inStock : true;
 
       return `
       <div class="product-card reveal opacity-0" data-id="${p.id}">
         <div class="relative aspect-[3/4] mb-6 overflow-hidden bg-gray-50 group">
           <img src="${imageUrl}" 
-               class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+               class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110 ${!isInStock ? "opacity-60" : ""}"
                alt="${p.name}">
+          ${
+            !isInStock
+              ? `
+          <div class="out-of-stock-overlay absolute inset-0 bg-black/40 flex items-center justify-center">
+            <span class="bg-red-500 text-white text-[10px] px-4 py-2 rounded-sm uppercase tracking-wider font-bold">
+              Esgotado
+            </span>
+          </div>
+          `
+              : ""
+          }
           <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <button data-product-id="${p.id}" 
-                    class="btn-explore bg-white text-black px-6 py-3 text-[9px] font-bold uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-              Explorar Detalhes
+                    class="btn-explore bg-white text-black px-6 py-3 text-[9px] font-bold uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-all duration-500 ${!isInStock ? "opacity-50 cursor-not-allowed" : ""}"
+                    ${!isInStock ? 'disabled style="pointer-events: none;"' : ""}>
+              ${isInStock ? "Explorar Detalhes" : "Indisponível"}
             </button>
           </div>
         </div>
@@ -231,6 +280,12 @@ const App = {
   openProductModal(id) {
     const product = PRODUCTS_DB.find((p) => p.id === id);
     if (!product) return;
+
+    // Verifica se o produto está em estoque
+    if (product._stock && !product._stock.inStock) {
+      this.showToast("❌ Este produto está indisponível no momento");
+      return;
+    }
 
     this.state.selectedProduct = product;
     this.state.selectedSize = null;
@@ -309,6 +364,15 @@ const App = {
   addToCart() {
     if (!this.state.selectedProduct) {
       this.showToast("Nenhum produto selecionado");
+      return;
+    }
+
+    // Verifica se o produto ainda está em estoque
+    if (
+      this.state.selectedProduct._stock &&
+      !this.state.selectedProduct._stock.inStock
+    ) {
+      this.showToast("❌ Este produto está indisponível no momento");
       return;
     }
 
@@ -720,6 +784,20 @@ const App = {
 
     if (this.state.cart.length === 0) {
       this.showToast("Sua sacola está vazia");
+      return;
+    }
+
+    // Verifica se todos os itens do carrinho ainda estão disponíveis
+    const unavailableItems = this.state.cart.filter((item) => {
+      const product = PRODUCTS_DB.find((p) => p.id === item.id);
+      return product && product._stock && !product._stock.inStock;
+    });
+
+    if (unavailableItems.length > 0) {
+      const itemNames = unavailableItems.map((item) => item.name).join(", ");
+      this.showToast(
+        `❌ Os seguintes itens ficaram indisponíveis: ${itemNames}. Remova-os para continuar.`,
+      );
       return;
     }
 
