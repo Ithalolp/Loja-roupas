@@ -69,7 +69,7 @@ const App = {
         this.setupCategoryFilters();
       }, 100);
 
-      this.showToast("✅ Estoque atualizado com sucesso!");
+      this.showToast("✅ Produtos atualizados do estoque");
     } catch (error) {
       console.error("❌ Erro ao carregar planilha:", error);
       this.showToast("⚠️ Erro ao carregar dados da planilha");
@@ -153,9 +153,9 @@ const App = {
       if (!loadingEl) {
         loadingEl = document.createElement("div");
         loadingEl.id = "stock-loading";
-        // CORRIGIDO PARA MOBILE: centralizado e responsivo
+        // Ajustado para mobile: centralizado, responsivo, sem quebrar layout
         loadingEl.className =
-          "fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-white/95 backdrop-blur-sm px-4 py-3 rounded-sm shadow-lg border border-gray-100 flex items-center justify-center gap-2 sm:gap-3 animate-fade-in-up w-[90%] max-w-[280px]";
+          "fixed top-4 left-4 right-4 mx-auto z-[200] bg-white/95 backdrop-blur-sm px-4 py-3 rounded-sm shadow-lg border border-gray-100 flex items-center justify-center gap-3 animate-fade-in-up w-fit max-w-[280px]";
         loadingEl.innerHTML = `
           <div class="w-4 h-4 border-2 border-gold border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
           <span class="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-600 whitespace-nowrap">Atualizando estoque...</span>
@@ -175,7 +175,7 @@ const App = {
   },
 
   async refreshStock() {
-    this.showToast("🔄 Atualizando estoque...");
+    this.showToast("🔄 Atualizando dados da planilha...");
     await this.loadStockData(true);
   },
 
