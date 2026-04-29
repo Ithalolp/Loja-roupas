@@ -153,11 +153,12 @@ const App = {
       if (!loadingEl) {
         loadingEl = document.createElement("div");
         loadingEl.id = "stock-loading";
+        // Ajustado para mobile: centralizado, responsivo, sem quebrar layout
         loadingEl.className =
-          "fixed top-4 left-1/2 -translate-x-1/2 z-[200] bg-white/90 backdrop-blur-sm px-6 py-3 rounded-sm shadow-lg border border-gray-100 flex items-center gap-3 animate-fade-in-up";
+          "fixed top-4 left-4 right-4 mx-auto z-[200] bg-white/95 backdrop-blur-sm px-4 py-3 rounded-sm shadow-lg border border-gray-100 flex items-center justify-center gap-3 animate-fade-in-up w-fit max-w-[280px]";
         loadingEl.innerHTML = `
-          <div class="w-4 h-4 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
-          <span class="text-[10px] uppercase tracking-widest text-gray-600">Atualizando estoque...</span>
+          <div class="w-4 h-4 border-2 border-gold border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
+          <span class="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-600 whitespace-nowrap">Atualizando estoque...</span>
         `;
         document.body.appendChild(loadingEl);
       }
@@ -682,7 +683,7 @@ const App = {
         setTimeout(() => phoneField.classList.remove("validation-error"), 300);
         isValid = false;
         if (!firstInvalidField) firstInvalidField = phoneField;
-        this.showToast("Formato de telefone inválido. Use (99) 99999-9999");
+        this.showToast("Formato de telefone inválido. Use (88) 00000-0000 ");
       }
     }
 
