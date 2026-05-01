@@ -119,29 +119,31 @@ const PRODUCTS_DB = [
       "Cinto masculino em couro legítimo vegano. Fivela banhada a ouro, durabilidade garantida. Complemento essencial para qualquer visual.",
     sizes: ["90cm", "95cm", "100cm", "105cm", "110cm"],
   },
-  {
-    id: 11,
-    name: "Tênis Casual Premium",
-    price: 0,
-    category: "acessorios",
-    tags: ["acessorios"],
-    image:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800",
-    description:
-      "Tênis masculino em couro legítimo com solado de borracha. Conforto garantido para uso diário. Design atemporal e versátil.",
-    sizes: ["40", "41", "42", "43", "44"],
-  },
+  //Bolsas
   {
     id: 12,
     name: "Mochila Urbana",
     price: 0,
-    category: "acessorios",
-    tags: ["acessorios"],
+    category: "bolsas",
+    tags: ["bolsas"],
     image:
       "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800",
     description:
       "Mochila em nylon resistente à água. Compartimentos organizados, alças acolchoadas. Perfeita para dia a dia e viagens curtas.",
     sizes: ["Único"],
+  },
+  //Calçados
+  {
+    id: 11,
+    name: "Tênis Casual Premium",
+    price: 0,
+    category: "calçados",
+    tags: ["calçados"],
+    image:
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800",
+    description:
+      "Tênis masculino em couro legítimo com solado de borracha. Conforto garantido para uso diário. Design atemporal e versátil.",
+    sizes: ["40", "41", "42", "43", "44"],
   },
 ];
 
